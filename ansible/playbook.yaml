@@ -4,8 +4,8 @@
   become: true
 
   vars:
-    new_user: ansible-user
-    app_dir: ./{{ new_user }}/Todos-nodejs
+    new_user: ubuntu
+    app_dir: /home/{{ new_user }}/Todos-nodejs-
 
     # Watchtower settings
     watchtower_container_name: watchtower
@@ -94,7 +94,7 @@
 
     - name: change the working directory to project dir
       ansible.builtin.shell:
-        cmd: cd /home/ubuntu/Todos-nodejs/ && docker compose up -d
+        cmd: cd /home/ubuntu/Todos-nodejs-/ && docker compose up -d
       
     
 
