@@ -13,9 +13,7 @@
     watchtower_update_interval: 100
 
   tasks:
-    # -------------------------------
     # EC2 User Setup
-    # -------------------------------
     - name: Ensure ansible-user exists
       user:
         name: "{{ new_user }}"
@@ -47,9 +45,7 @@
         mode: '0600'
         remote_src: yes
 
-    # -------------------------------
     # Docker Installation
-    # -------------------------------
     - name: Install dependencies for Docker
       apt:
         name:
@@ -96,17 +92,6 @@
       ansible.builtin.shell:
         cmd: cd /home/ubuntu/Todos-nodejs-/ && docker compose up -d
       
-    
-
-    # -------------------------------
-    # Deploy Entire Project Folder
-    # -------------------------------
- #   - name: Sync Todos-nodejs project directory to EC2
-  #    ansible.posix.synchronize:
-   #     src: /home/soha/Todos-nodejs/
-    #    dest: "{{ app_dir }}/"
-     #   recursive: yes
-      #  delete: no
 
     - name: Ensure correct permissions for app folder
       file:
@@ -116,18 +101,14 @@
         group: "{{ new_user }}"
         recurse: yes
 
-    # -------------------------------
     # Docker Compose Deployment
-    # -------------------------------
     - name: Start full application stack using docker-compose
       community.docker.docker_compose_v2:
         project_src: "{{ app_dir }}"
         state: present
       become_user: root
 
-    # -------------------------------
     # Watchtower (Auto-update containers)
-    # -------------------------------
     - name: Ensure Watchtower is running
       community.docker.docker_container:
         name: "{{ watchtower_container_name }}"
