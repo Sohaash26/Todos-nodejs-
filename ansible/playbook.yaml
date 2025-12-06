@@ -1,6 +1,6 @@
 ---
 - name: EC2 Setup + Deploy Todo App + Monitoring
-  hosts: todoapp--server
+  hosts: todoapp-server1
   become: true
 
   vars:
